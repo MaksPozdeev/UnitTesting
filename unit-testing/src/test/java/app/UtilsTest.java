@@ -1,22 +1,42 @@
 package app;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+
+@RunWith(Parameterized.class)
 public class UtilsTest {
 
     /**
      * Tests for concatenateWords() method
      */
 
+    @Parameterized.Parameters(name = "Тест {index}: firstWord = {0}, secondWord = {1}, expected = {2}")
+    public static Iterable<Object[]> dataForTest() {
+        return Arrays.asList(new Object[][]{
+                {"Hello", "world", "Helloworld"},
+                {"", "world", "world"},
+                {"Hello", "", "Hello"},
+                {"", "", ""},
+        });
+    }
+
+    private String firstWord;
+    private String secondWord;
+    private String expected;
+
+    public UtilsTest(String firstWord, String secondWord, String expected) {
+        this.firstWord = firstWord;
+        this.secondWord = secondWord;
+        this.expected = expected;
+    }
+
     @Test
-    public void isBothWordsExist() {
-        String firstWord = "Hello";
-        String secondWord = "world";
-        String expected = firstWord + secondWord;
-        String actual = Utils.concatenateWords(firstWord, secondWord);
-        Assert.assertEquals(expected, actual);
+    public void testWithParameters() {
+        Assert.assertEquals(expected, Utils.concatenateWords(firstWord, secondWord));
     }
 
     //    One or both words "null"
@@ -38,32 +58,6 @@ public class UtilsTest {
     public void isBothWordsNull() {
         String expected = "-1";
         String actual = Utils.concatenateWords(null, null);
-        Assert.assertEquals(expected, actual);
-    }
-
-    //    One or both words is "empty"
-    @Test
-    public void isFirstEmptyWord() {
-        String firstWord = "";
-        String secondWord = "world";
-        String actual = Utils.concatenateWords(firstWord, secondWord);
-        Assert.assertEquals(secondWord, actual);
-    }
-
-    @Test
-    public void isSecondEmptyWord() {
-        String firstWord = "Hello";
-        String secondWord = "";
-        String actual = Utils.concatenateWords(firstWord, secondWord);
-        Assert.assertEquals(firstWord, actual);
-    }
-
-    @Test
-    public void isBothWordsEmpty() {
-        String firstWord = "";
-        String secondWord = "";
-        String expected = "";
-        String actual = Utils.concatenateWords(firstWord, secondWord);
         Assert.assertEquals(expected, actual);
     }
 
@@ -132,54 +126,5 @@ public class UtilsTest {
         String actual = Utils.concatenateWords(firstWord, secondWord);
         Assert.assertEquals(secondWord, actual);
     }
-
-    /**
-     * Tests for computeFactorial() method
-     */
-//      <0-> exc, 0->1 , 1->1, n ->n!
-//    @Test(expected = IllegalArgumentException.class)
-//    public void isNumberNegative(){
-//        long actual = Utils.computeFactorial(-3);
-//        Assert.assertEquals(1,actual);
-//    }
-    @Test
-    public void isNumberNegative() {
-        long actual = Utils.computeFactorial(-3);
-        Assert.assertEquals(-1, actual);
-    }
-
-    @Test
-    public void isNumberZero() {
-        long actual = Utils.computeFactorial(0);
-        Assert.assertEquals(1, actual);
-    }
-
-    @Test
-    public void isNumberOne() {
-        long actual = Utils.computeFactorial(1);
-        Assert.assertEquals(1, actual);
-    }
-
-    @Test
-    public void isNumber5() {
-        long actual = Utils.computeFactorial(5);
-        Assert.assertEquals(120, actual);
-    }
-
-    @Test
-    public void testComputeFactorial() {
-        long actual = Utils.computeFactorial(6);
-        Assert.assertEquals(720, actual);
-    }
-
-
-    @Ignore
-    @Test(timeout = 1)
-    public void testFactorialWithTimeout() {
-        int rndNumber = (int) (Math.random() * 10) + 7;
-        long actual = Utils.computeFactorial(rndNumber);
-        Assert.assertEquals(720, actual);
-    }
-
 
 }

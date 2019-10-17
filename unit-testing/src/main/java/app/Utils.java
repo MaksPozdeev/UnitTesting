@@ -17,34 +17,17 @@ class Utils {
                 throw new IllegalArgumentException("Задано отрицательное число");
             }
         } catch (IllegalArgumentException e){
-            result = -1;
             e.printStackTrace();
         }
-
-        if (number == 0) {
-            return 1;
-        }
-        if (number == 1) {
-            return 1;
-        }
-        for (int i = 1; i <= number; i++) {
+        for (int i = 1; i <=number; i ++){
             result *= i;
         }
         return result;
     }
 
-
-    private static boolean isWordExist(String word) {
-        boolean wordExist = false;
-        if (word != null) {
-            wordExist = true;
-        }
-        return wordExist;
-    }
-
     private static boolean isWordIsLatin(String word) {
         boolean result = false;
-        if (isWordExist(word)) {
+        if (word != null) {
             if (word.isEmpty()) {
                 return true;
             } else {
